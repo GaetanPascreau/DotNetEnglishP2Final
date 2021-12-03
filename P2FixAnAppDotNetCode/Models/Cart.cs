@@ -21,8 +21,7 @@ namespace P2FixAnAppDotNetCode.Models
         /// </summary>
         /// <returns></returns>
         /// 
-      //This method was modified to prevent it from reinitializing the list each time it is called. Now it returns the current list
-
+        //This method was modified to prevent it from reinitializing the list each time it is called. Now it returns the current list
         private List<CartLine> GetCartLineList()
         {
             return _cartLines;
@@ -84,8 +83,23 @@ namespace P2FixAnAppDotNetCode.Models
         /// </summary>
         public Product FindProductInCartLines(int productId)
         {
-            // TODO implement the method
-            return null;
+            //Create a new Product to contain the result of the search and initialize it
+            Product result = new Product(0, 0, 0, "", "");
+            //browse the cart and look for the provided productId
+            foreach (CartLine line in Lines)
+            {
+                //if the Id exists, return the product
+                if (line.Product.Id == productId)
+                {
+                    result = line.Product;
+                }
+                //if the Id doesn't exist, return null
+                else
+                {
+                    result = null;
+                }
+            }
+            return result;
         }
 
         /// <summary>
