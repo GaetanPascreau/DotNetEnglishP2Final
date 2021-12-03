@@ -13,13 +13,19 @@ namespace P2FixAnAppDotNetCode.Models
         /// </summary>
         public IEnumerable<CartLine> Lines => GetCartLineList();
 
+        //Create a readonly list that will contain the actual cartLine list to be transmitted to the enum
+        private readonly List<CartLine> _cartLines = new List<CartLine>();
+
         /// <summary>
         /// Return the actual cartline list
         /// </summary>
         /// <returns></returns>
+        /// 
+      //This method was modified to prevent it from reinitializing the list each time it is called. Now it returns the current list
+
         private List<CartLine> GetCartLineList()
         {
-            return new List<CartLine>();
+            return _cartLines;
         }
 
         /// <summary>
@@ -27,7 +33,26 @@ namespace P2FixAnAppDotNetCode.Models
         /// </summary>//
         public void AddItem(Product product, int quantity)
         {
-            // TODO implement the method
+            //Create a CartLine object that will contain the result of a search within the current CartLine list
+            //for a Product Id matching the Id from the product parameter 
+            CartLine cartLine = _cartLines.FirstOrDefault(x => x.Product.Id == product.Id);
+            //if we find such an Id, the product with its Id and Quantity will be added in to the CartLine object (thus, the object will not be null)
+            if (cartLine != null)
+            {
+                //Update the Quantity with the value of the quantity parameter
+                cartLine.Quantity += quantity;
+            }
+            else
+            {
+                //if this product is not already in the cart, we create it and add it to the cart
+                cartLine = new CartLine
+                {
+                    Product = product,
+                    Quantity = quantity
+                };
+
+                _cartLines.Add(cartLine);
+            }
         }
 
         /// <summary>
