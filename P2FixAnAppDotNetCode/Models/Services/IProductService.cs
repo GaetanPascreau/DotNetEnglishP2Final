@@ -1,8 +1,9 @@
-﻿namespace P2FixAnAppDotNetCode.Models.Services
+﻿using System.Collections.Generic; //necessary to implement a List
+namespace P2FixAnAppDotNetCode.Models.Services
 {
     public interface IProductService
     {
-        Product[] GetAllProducts();
+        List<Product> GetAllProducts();  //replace the return type Product[] by List<ProductT>
         Product GetProductById(int id);
         void UpdateProductQuantities(Cart cart);
     }

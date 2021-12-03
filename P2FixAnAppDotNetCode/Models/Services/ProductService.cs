@@ -1,4 +1,6 @@
 ﻿using P2FixAnAppDotNetCode.Models.Repositories;
+using System.Collections.Generic;
+using System.Linq; //necessary to use ToList()
 
 namespace P2FixAnAppDotNetCode.Models.Services
 {
@@ -19,11 +21,9 @@ namespace P2FixAnAppDotNetCode.Models.Services
         /// <summary>
         /// Get all product from the inventory
         /// </summary>
-        public Product[] GetAllProducts()
+        public List<Product> GetAllProducts()
         {
-            // TODO change the return type from array to List<T> and propagate the change
-            // thoughout the application
-            return _productRepository.GetAllProducts();
+            return _productRepository.GetAllProducts().ToList(); //convert the Product Array into a List of Product
         }
 
         /// <summary>
@@ -31,8 +31,12 @@ namespace P2FixAnAppDotNetCode.Models.Services
         /// </summary>
         public Product GetProductById(int id)
         {
-            // TODO implement the method
-            return null;
+            // Instanciate a new ProductService and use it to recover all products from the repository into a new list
+            ProductService productService = new ProductService(_productRepository, _orderRepository);
+            List<Product> repositoryList = productService.GetAllProducts();
+            //search within that list for a product with the provided id and return it
+            Product product = repositoryList.FirstOrDefault(prod => prod.Id == id);
+            return product;
         }
 
         /// <summary>
