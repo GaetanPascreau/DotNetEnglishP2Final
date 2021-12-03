@@ -83,8 +83,20 @@ namespace P2FixAnAppDotNetCode.Models
         /// </summary>
         public double GetAverageValue()
         {
-            // TODO implement the method
-            return 0.0;
+            //Get the total cart value by calling the GetTotalValue() method
+            //Browse all products from the cart using a foreach on the cart
+            //Increment the total quantity by the quantity of the each product found in the cart
+            //Calculate the average value of the cart by dividing the total cart value by the total quantity, and return it
+
+            double averageValue = 0;
+            int totalQuantity = 0;
+            double totalCartValue = GetTotalValue();
+
+            foreach (CartLine line in Lines)
+            {
+                totalQuantity += line.Quantity;
+            }
+            return averageValue = totalCartValue / totalQuantity;
         }
 
         /// <summary>
